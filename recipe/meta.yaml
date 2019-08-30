@@ -1,12 +1,12 @@
-{% set version = "20170520" %}
+{% set version = "20170524" %}
 
 package:
   name: texlive-core
   version: {{ version }}
 
 source:
-  url: https://www.ctan.org/tex-archive/systems/texlive/Source/texlive-{{ version }}-source.tar.xz
-  sha256: c0a032aa9fa29e7cb521659779d6415f3b4b062a6a44193fb4e79cfefe7b8954
+  url: ftp://tug.org/texlive/historic/2017/texlive-{{ version }}-source.tar.xz
+  sha256: 0161695304e941334dc0b3b5dabcf8edf46c09b7bc33eea8229b5ead7ccfb2aa
 
 build:
   number: 2
@@ -15,7 +15,17 @@ build:
 
 requirements:
   build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    #- xorg-libxrender
+    #- xorg-libxext
+    #- xorg-libxau
     - pkg-config
+    - make
+    - {{ cdt('libxrender-devel') }}  # [linux]
+    - {{ cdt('libxext-devel') }}     # [linux]
+    - {{ cdt('libxau-devel') }}     # [linux]
+  host:
     - cairo 1.14.*
     - gmp 6.1.*
     - icu 58.*
@@ -24,7 +34,10 @@ requirements:
     - freetype 2.8.*
     - libpng >=1.6.32,<1.6.35
     - zlib 1.2.11
-    - perl 5.22.2.1
+    - perl 5.26.2
+    - fontconfig
+    - graphite2
+    - harfbuzz
   run:
     - cairo 1.14.*
     - gmp 6.1.*
@@ -34,7 +47,7 @@ requirements:
     - freetype 2.8.*
     - libpng >=1.6.32,<1.6.35
     - zlib 1.2.11
-    - perl 5.22.2.1
+    - perl 5.26.2
 
 test:
   commands:
